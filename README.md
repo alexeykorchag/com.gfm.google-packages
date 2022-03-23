@@ -1,4 +1,4 @@
-Google User Messaging Platform Unity SDK
+Google packages
 ==================
 
 

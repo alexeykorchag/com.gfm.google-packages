@@ -128,16 +128,21 @@ namespace GFM.GooglePackages
         {
             if (package.IsButtonRemove)
             {
-                RemovePackage(package.Name);
+                RemovePackage(package);
             }
             else if (package.IsButtonInstall)
             {
-                EditorCoroutines.StartEditorCoroutine(DownloadPackage(package.Name, package.Selected));
+                EditorCoroutines.StartEditorCoroutine(DownloadPackage(package));
             }
         }
 
-        private IEnumerator DownloadPackage(string packageName, string packageVersion)
+        private IEnumerator DownloadPackage(PackageInfo package)
         {
+            package.Installed = package.Selected;
+
+            var packageName = package.Name;
+            var packageVersion = package.Selected;
+
             _packageLoader.Remove(packageName);
 
             EditorCoroutines.StartEditorCoroutine(_packageLoader.Download(packageName, packageVersion));
@@ -145,16 +150,23 @@ namespace GFM.GooglePackages
                 yield return new WaitForSeconds(0.1f);
 
             _packageDependencies.AddPackage(packageName, packageVersion);
+
+
             _packageDependencies.Save();
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-
-            UpdateDependencies();
         }
 
-        private void RemovePackage(string packageName)
+        private void RemovePackage(PackageInfo package)
         {
+            package.Selected = PackageInfo.NONE;
+            package.Installed = PackageInfo.NONE;
+
+            var packageName = package.Name;
+
+            package.Installed = package.Selected;
+
             _packageLoader.Remove(packageName);
 
             _packageDependencies.RemovePackage(packageName);
@@ -162,8 +174,6 @@ namespace GFM.GooglePackages
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-
-            UpdateDependencies();
         }
 
         private void ReadDependencies()
