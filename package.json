@@ -5,7 +5,7 @@
   "unity": "2019.4",
   "description": "Google packages by GFM",
   "dependencies": {
-      "com.unity.editorcoroutines": "1.0.0",
+      "com.unity.editorcoroutines": "1.0.0"
  },
   "keywords": [
     "GFM"
