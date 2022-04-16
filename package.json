@@ -1,9 +1,12 @@
 {
-  "name": "com.gfm.com.gfm.google-packages",
+  "name": "com.gfm.google-packages",
   "displayName": "Google packages",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "unity": "2019.4",
   "description": "Google packages by GFM",
+  "dependencies": {
+      "com.unity.editorcoroutines": "1.0.0",
+ },
   "keywords": [
     "GFM"
   ]
